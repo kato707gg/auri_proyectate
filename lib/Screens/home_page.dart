@@ -130,7 +130,7 @@ class Title extends StatelessWidget {
             ),
             textAlign: TextAlign.end,
           ),
-          Image.asset('assets/auridef (1)-svg.png')
+          Image.asset('assets/rn-removebg-preview (1)')
         ],
       ),
     );
