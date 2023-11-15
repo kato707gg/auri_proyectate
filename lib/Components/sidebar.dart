@@ -1,40 +1,52 @@
 import 'dart:ui';
 
+import 'package:auri_proyectate/Screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Sidebar extends StatelessWidget {
-  const Sidebar({super.key, required this.isActive});
+class Sidebar extends StatefulWidget {
+  const Sidebar({Key? key}) : super(key: key);
 
-  final bool isActive;
+  @override
+  _SidebarState createState() => _SidebarState();
+}
+
+class _SidebarState extends State<Sidebar> {
+  int selectedIndex = -1;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: EdgeInsets.only(
-            left: 10.0, bottom: 10), // Ajusta la cantidad de despegue
+        padding: EdgeInsets.only(left: 10.0, bottom: 10),
         child: FractionallySizedBox(
           widthFactor: 0.6,
           child: Drawer(
             backgroundColor: Colors.transparent,
             child: BackdropFilter(
               filter: ImageFilter.blur(
-                  sigmaX: 2.5,
-                  sigmaY: 2.5), // Ajusta el desenfoque según sea necesario
+                sigmaX: 2.5,
+                sigmaY: 2.5,
+              ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: Container(
-                  color: Color.fromARGB(255, 218, 240, 255),
-                  child: ListView(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color.fromARGB(255, 222, 218, 255),
+                        Color.fromARGB(255, 255, 255, 255),
+                      ],
+                    ),
+                  ),
+                  child: Column(
                     children: [
-                      Container(
-                        height: 200, // Ajusta la altura según sea necesario
+                      SizedBox(
+                        height: 250,
                         child: DrawerHeader(
                           padding: EdgeInsets.symmetric(vertical: 10),
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 218, 240, 255),
-                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -44,8 +56,7 @@ class Sidebar extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: Colors.white,
-                                    width:
-                                        3.0, // Ajusta el ancho del borde según tus preferencias
+                                    width: 3.0,
                                   ),
                                 ),
                                 child: CircleAvatar(
@@ -58,7 +69,7 @@ class Sidebar extends StatelessWidget {
                                 height: 15,
                               ),
                               Text(
-                                'Mr.John',
+                                'Diego H',
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -69,7 +80,7 @@ class Sidebar extends StatelessWidget {
                                 height: 2,
                               ),
                               Text(
-                                'John300@gmail.com',
+                                'DiegoH@gmail.com',
                                 style: GoogleFonts.poppins(
                                   color: Color.fromARGB(255, 75, 75, 75),
                                   fontSize: 12,
@@ -79,51 +90,29 @@ class Sidebar extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Stack(
-                        children: [
-                          AnimatedPositioned(
-                            height: 48, // Altura de la pantalla
-                            width: isActive
-                                ? MediaQuery.of(context).size.width * 0.6 - 6
-                                : 0, // Ancho del 60% de la pantalla
-                            duration: Duration(microseconds: 300),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Color.fromARGB(255, 184, 223, 255),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                            ),
-                          ),
-                          ListTile(
-                            leading: Icon(Icons.home),
-                            title: Text('Home'),
-                            onTap: () => onTap(context, 0),
-                          ),
-                        ],
+                      SizedBox(
+                        height: 20,
                       ),
-                      ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text('Profile'),
-                        onTap: () => onTap(context, 0),
+                      buildListItem(Icons.person, 'Cuenta', 0),
+                      SizedBox(
+                        height: 10,
                       ),
-                      ListTile(
-                        leading: Icon(Icons.phone),
-                        title: Text('Phone'),
-                        onTap: () => onTap(context, 0),
+                      buildListItem(Icons.settings, 'Settings', 1),
+                      SizedBox(
+                        height: 10,
                       ),
-                      ListTile(
-                        leading: Icon(Icons.settings),
-                        title: Text('Settings'),
-                        onTap: () => onTap(context, 0),
+                      buildListItem(Icons.star_rounded, 'Novedades', 2),
+                      SizedBox(
+                        height: 10,
                       ),
-                      Divider(
-                        height: 1,
+                      buildListItem(Icons.question_mark_rounded, 'Ayuda', 3),
+                      Spacer(),
+                      SizedBox(
+                        height: 20,
                       ),
-                      ListTile(
-                        leading: Icon(Icons.exit_to_app),
-                        title: Text('Logout'),
-                        onTap: () => onTap(context, 0),
+                      buildListItem(Icons.exit_to_app_rounded, 'Logout', 4),
+                      SizedBox(
+                        height: 20,
                       ),
                     ],
                   ),
@@ -135,6 +124,43 @@ class Sidebar extends StatelessWidget {
       ),
     );
   }
-}
 
-onTap(BuildContext context, int i) {}
+  Widget buildListItem(IconData icon, String title, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedIndex = index;
+        });
+        onTap(context, index);
+      },
+      child: Stack(
+        children: [
+          if (selectedIndex == index)
+            Positioned(
+              height: 56,
+              width: MediaQuery.of(context).size.width * 0.6 - 6,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 219, 216, 255),
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                ),
+              ),
+            ),
+          ListTile(
+            leading: Icon(icon),
+            title: Text(title),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void onTap(BuildContext context, int index) {
+    if (index == 4) {
+      // Si se selecciona "Logout", navega a la pantalla de inicio de sesión
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
+  }
+}
