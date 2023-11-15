@@ -117,15 +117,20 @@ class Title extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 20),
-      child: Text(
-        'Desbloquea el poder del la IA',
-        style: GoogleFonts.quicksand(
-          fontSize: 35,
-          fontWeight: FontWeight.w900,
-          color: Colors.black,
-        ),
-        maxLines: 2,
-        textAlign: TextAlign.end,
+      child: Row(
+        children: [
+          Text(
+            'AURI',
+            style: GoogleFonts.quicksand(
+              letterSpacing: null,
+              fontSize: 35,
+              fontWeight: FontWeight.w900,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.end,
+          ),
+          Image.asset('assets/auridef (1)-svg.png')
+        ],
       ),
     );
   }
