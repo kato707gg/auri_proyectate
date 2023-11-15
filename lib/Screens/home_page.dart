@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:auri_proyectate/Components/sidebar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -211,54 +213,74 @@ class MyInvestmentsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            image: DecorationImage(
-              image: AssetImage(imagen),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Container(
-            height: 130,
-            padding: EdgeInsets.all(20),
+    return GestureDetector(
+      onTap: () async {
+        // Acción que deseas realizar al hacer clic en la tarjeta
+        print('Clic en $texto1');
+
+        // Abre la galería y permite al usuario seleccionar una imagen
+        final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+
+        if (pickedFile != null) {
+          // El usuario seleccionó una imagen, aquí puedes realizar la lógica necesaria con la imagen seleccionada.
+          print('Imagen seleccionada: ${pickedFile.path}');
+        }
+
+        // Puedes navegar a otra pantalla, mostrar un diálogo, etc.
+
+
+
+        // Puedes navegar a otra pantalla, mostrar un diálogo, etc.
+      },
+      child: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
-              gradient: LinearGradient(
-                begin: Alignment.centerRight,
-                end: Alignment.centerLeft,
-                colors: [
-                  Color.fromARGB(0, 143, 143, 143).withOpacity(0.1),
-                  Color.fromARGB(255, 59, 59, 59).withOpacity(0.4),
-                  Color.fromARGB(255, 0, 0, 0).withOpacity(0.6),
+              image: DecorationImage(
+                image: AssetImage(imagen),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Container(
+              height: 130,
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                gradient: LinearGradient(
+                  begin: Alignment.centerRight,
+                  end: Alignment.centerLeft,
+                  colors: [
+                    Color.fromARGB(0, 143, 143, 143).withOpacity(0.1),
+                    Color.fromARGB(255, 59, 59, 59).withOpacity(0.4),
+                    Color.fromARGB(255, 0, 0, 0).withOpacity(0.6),
+                  ],
+                ),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      texto1,
+                      style: GoogleFonts.poppins(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    size: 30,
+                  ),
                 ],
               ),
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    texto1,
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  size: 30,
-                ),
-              ],
-            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
