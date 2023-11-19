@@ -201,12 +201,15 @@ class _HomeBodyState extends State<HomeBody> {
           onPressed: _uploadAndTransformImage,
           child: Text('Upload and Transform Image'),
         ),
+        RecomendedTable(),
       ],
     );
   }
 }
 
 class PhotoEditor extends StatelessWidget {
+  const PhotoEditor({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,4 +228,93 @@ void main() {
   runApp(MaterialApp(
     home: PhotoEditor(),
   ));
+}
+
+class RecomendedTable extends StatelessWidget {
+  const RecomendedTable({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            SizedBox(
+              width: 10,
+            ),
+            RecomendedCard(
+              imagen: AssetImage('assets/xbox.png'),
+              texto1: ('Xbox'),
+            ),
+            RecomendedCard(
+              imagen: AssetImage('assets/mcdonalds.png'),
+              texto1: ('McDonalds'),
+            ),
+            RecomendedCard(
+              imagen: AssetImage('assets/tiktok.png'),
+              texto1: ('TikTok'),
+            ),
+            RecomendedCard(
+              imagen: AssetImage('assets/google.png'),
+              texto1: ('Google'),
+            ),
+            RecomendedCard(
+              imagen: AssetImage('assets/hbo.png'),
+              texto1: ('HBO'),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+          ],
+        ));
+  }
+}
+
+class RecomendedCard extends StatelessWidget {
+  final AssetImage imagen;
+  final String texto1;
+
+  const RecomendedCard({super.key, required this.imagen, required this.texto1});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      width: 100.0,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width:
+                80.0, // Ajusta según sea necesario para el tamaño del círculo
+            height: 80.0,
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 61, 59, 62),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Center(
+              child: Image(
+                image: imagen,
+                width:
+                    30.0, // Ajusta según sea necesario para el tamaño de la imagen
+                height: 30.0,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            this.texto1,
+            style: TextStyle(
+              fontFamily: 'NunitoSans',
+              fontSize: 15.0,
+              //fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 255, 154, 65),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
