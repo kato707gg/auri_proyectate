@@ -40,7 +40,7 @@ class Background extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/Fondo.jpg'),
+          image: AssetImage('assets/Fondooo.jpg'),
           fit: BoxFit.cover,
         ),
       ),

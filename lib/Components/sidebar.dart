@@ -35,6 +35,7 @@ class _SidebarState extends State<Sidebar> {
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
+                      stops: [0.1, 0.5],
                       colors: [
                         Color.fromARGB(255, 222, 218, 255),
                         Color.fromARGB(255, 255, 255, 255),

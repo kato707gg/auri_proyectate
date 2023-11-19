@@ -28,7 +28,7 @@ class BackGround extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: [0.1, 1.0],
+          stops: [0.1, 0.5],
           colors: [
             Color.fromARGB(255, 218, 249, 255),
             Color.fromARGB(255, 255, 255, 255),
@@ -96,7 +96,7 @@ class SidebarButton extends StatelessWidget {
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
-          backgroundColor: Color.fromARGB(255, 216, 226, 255),
+          backgroundColor: Color.fromARGB(255, 240, 237, 255),
           padding: const EdgeInsets.all(12),
           elevation: 5,
         ),
