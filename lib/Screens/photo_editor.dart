@@ -26,11 +26,11 @@ class _PhotoEditorState extends State<PhotoEditor> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+      // Muestra la imagen original inmediatamente después de seleccionarla
       setState(() {
         _selectedImage = File(pickedFile.path);
         _transformedImageUrl = null;
         _key = UniqueKey();
-        _isHoldingImage = false;
       });
     }
   }
@@ -59,7 +59,6 @@ class _PhotoEditorState extends State<PhotoEditor> {
       setState(() {
         _transformedImageUrl = transformedImageUrl;
         _key = UniqueKey();
-        _isHoldingImage = true;
       });
 
       print('Transformed Image URL: $_transformedImageUrl');
@@ -79,12 +78,13 @@ class _PhotoEditorState extends State<PhotoEditor> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
-            onLongPress: () {
+            onTap: () {},
+            onTapDown: (_) {
               setState(() {
                 _isHoldingImage = true;
               });
             },
-            onLongPressUp: () {
+            onTapUp: (_) {
               setState(() {
                 _isHoldingImage = false;
               });
@@ -92,23 +92,28 @@ class _PhotoEditorState extends State<PhotoEditor> {
             child: Stack(
               children: [
                 Visibility(
-                  visible: _isHoldingImage && _transformedImageUrl != null,
-                  child: Image.network(
-                    _transformedImageUrl!,
-                    key: _key,
-                    height: 200,
-                    width: 200,
-                    fit: BoxFit.cover,
-                  ),
+                  visible: !_isHoldingImage && _transformedImageUrl != null,
+                  child: _transformedImageUrl != null
+                      ? Image.network(
+                          _transformedImageUrl!,
+                          key: _key,
+                          height: 200,
+                          width: 200,
+                          fit: BoxFit.cover,
+                        )
+                      : SizedBox(), // Usar un contenedor vacío si la URL es nula
                 ),
                 Visibility(
-                  visible: !_isHoldingImage,
-                  child: Image.file(
-                    _selectedImage!,
-                    height: 200,
-                    width: 200,
-                    fit: BoxFit.cover,
-                  ),
+                  visible: _isHoldingImage || _transformedImageUrl == null,
+                  child: _selectedImage != null
+                      ? Image.file(
+                          _selectedImage!,
+                          key: _key,
+                          height: 200,
+                          width: 200,
+                          fit: BoxFit.cover,
+                        )
+                      : SizedBox(), // Usar un contenedor vacío si la imagen es nula
                 ),
               ],
             ),
