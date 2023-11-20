@@ -243,24 +243,28 @@ class RecomendedTable extends StatelessWidget {
               width: 10,
             ),
             RecomendedCard(
-              imagen: AssetImage('assets/xbox.png'),
-              texto1: ('Xbox'),
+              imagen: AssetImage('assets/brillo.png'),
+              texto1: ('Brillo'),
             ),
             RecomendedCard(
-              imagen: AssetImage('assets/mcdonalds.png'),
-              texto1: ('McDonalds'),
+              imagen: AssetImage('assets/contraste.png'),
+              texto1: ('Contraste'),
             ),
             RecomendedCard(
-              imagen: AssetImage('assets/tiktok.png'),
-              texto1: ('TikTok'),
+              imagen: AssetImage('assets/saturacion.png'),
+              texto1: ('Saturación'),
             ),
             RecomendedCard(
-              imagen: AssetImage('assets/google.png'),
-              texto1: ('Google'),
+              imagen: AssetImage('assets/vibrance.png'),
+              texto1: ('Vividez'),
             ),
             RecomendedCard(
-              imagen: AssetImage('assets/hbo.png'),
-              texto1: ('HBO'),
+              imagen: AssetImage('assets/arcoiris.png'),
+              texto1: ('Matiz'),
+            ),
+            RecomendedCard(
+              imagen: AssetImage('assets/tono.png'),
+              texto1: ('Tono'),
             ),
             SizedBox(
               width: 10,
@@ -289,7 +293,7 @@ class RecomendedCard extends StatelessWidget {
                 80.0, // Ajusta según sea necesario para el tamaño del círculo
             height: 80.0,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 61, 59, 62),
+              color: Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.circular(100),
             ),
             child: Center(
