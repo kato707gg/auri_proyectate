@@ -59,7 +59,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
           "Authorization": authToken,
         },
         body: jsonEncode({
-          "version": "ae80bbe1adce7d616b8a96ba88a91d3556838d4f2f4da76327638b8e95ea4694",
+          "version": "9283608cc6b7be6b65a8e44983db012355fde4132009bf99d976b2f0896856a3",
           "input": {
             "img": imageUri,
             "scale": 2,
@@ -99,7 +99,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
         print("mamalon $apiUrl");
 
         try {
-          await Future.delayed(Duration(seconds: 20));
+          await Future.delayed(Duration(seconds: 30));
           var response = await http.get(
             headers: {'Authorization': 'Token r8_cbAmgoyJPEbI8rQ4EcUorwso9yArZwY41ixtM',  "Content-Type": "application/json" },
             Uri.parse(apiUrl),

@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import 'package:auri_proyectate/Screens/photo_editor.dart';
-import 'package:flutter/material.dart';
-import 'package:auri_proyectate/Components/sidebar.dart';
-import 'package:google_fonts/google_fonts.dart';
-=======
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:auri_proyectate/Components/sidebar.dart';
@@ -11,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'EditPhotoScreen.dart';
->>>>>>> 69ce224 (Can just select image NO edit)
 
 class HomePage extends StatelessWidget {
   @override
@@ -23,13 +16,9 @@ class HomePage extends StatelessWidget {
           Homebody(),
         ],
       ),
-<<<<<<< HEAD
-      drawer: Sidebar(),
-=======
       drawer: Sidebar(
         isActive: false,
       ),
->>>>>>> 69ce224 (Can just select image NO edit)
     );
   }
 }
@@ -44,15 +33,9 @@ class BackGround extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-<<<<<<< HEAD
-          stops: [0.1, 0.5],
-          colors: [
-            Color.fromARGB(255, 218, 249, 255),
-=======
           stops: [0.1, 1.0],
           colors: [
             Color.fromARGB(255, 218, 219, 255),
->>>>>>> 69ce224 (Can just select image NO edit)
             Color.fromARGB(255, 255, 255, 255),
           ],
         ),
@@ -111,22 +94,14 @@ class SidebarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-<<<<<<< HEAD
-      margin: const EdgeInsets.only(left: 20),
-=======
       margin: const EdgeInsets.only(left: 11),
->>>>>>> 69ce224 (Can just select image NO edit)
       child: ElevatedButton(
         onPressed: () {
           Scaffold.of(context).openDrawer();
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
-<<<<<<< HEAD
-          backgroundColor: Color.fromARGB(255, 240, 237, 255),
-=======
           backgroundColor: Colors.white,
->>>>>>> 69ce224 (Can just select image NO edit)
           padding: const EdgeInsets.all(12),
           elevation: 5,
         ),
@@ -139,54 +114,13 @@ class SidebarButton extends StatelessWidget {
   }
 }
 
-<<<<<<< HEAD
-//EN ESTA BRANCH VOY A ESTAR HACIENDO CAMBIOS
-class Title extends StatelessWidget {
-  const Title({Key? key});
-=======
 class Title extends StatelessWidget {
   const Title({Key? key}) : super(key: key);
->>>>>>> 69ce224 (Can just select image NO edit)
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 20),
-<<<<<<< HEAD
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          RichText(
-            text: TextSpan(
-              style: GoogleFonts.quicksand(
-                letterSpacing: null,
-                fontSize: 35,
-                fontWeight: FontWeight.w500,
-                color: const Color.fromARGB(255, 0, 0, 0),
-              ),
-              children: [
-                TextSpan(
-                  text: 'A',
-                  style: TextStyle(color: Color.fromARGB(255, 131, 33, 243)),
-                ),
-                TextSpan(text: 'UR'),
-                TextSpan(
-                  text: 'I',
-                  style: TextStyle(color: Color.fromARGB(255, 131, 33, 243)),
-                ),
-              ],
-            ),
-            textAlign: TextAlign.end,
-          ),
-          SizedBox(
-            height: 60,
-            child: Image.asset(
-              'assets/rana.png',
-              fit: BoxFit.contain,
-            ),
-          ),
-        ],
-=======
       child: Text(
         'Desbloquea el poder del la IA',
         style: GoogleFonts.quicksand(
@@ -196,47 +130,12 @@ class Title extends StatelessWidget {
         ),
         maxLines: 2,
         textAlign: TextAlign.end,
->>>>>>> 69ce224 (Can just select image NO edit)
       ),
     );
   }
 }
 
 class SubTitle extends StatelessWidget {
-<<<<<<< HEAD
-  const SubTitle({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 27),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 25),
-          Text(
-            'Descubre el poder de la IA',
-            style: GoogleFonts.poppins(
-              fontSize: 35,
-              fontWeight: FontWeight.w600,
-              color: Color.fromARGB(255, 45, 45, 85),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 15),
-          Text(
-            'Obten las mejores fotos y aumenta\ntu productividad',
-            style: GoogleFonts.poppins(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: const Color.fromARGB(255, 85, 85, 85),
-            ),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 25),
-        ],
-      ),
-=======
   const SubTitle({Key? key}) : super(key: key);
 
   @override
@@ -268,7 +167,6 @@ class SubTitle extends StatelessWidget {
         ),
         SizedBox(height: 25),
       ],
->>>>>>> 69ce224 (Can just select image NO edit)
     );
   }
 }
@@ -317,31 +215,12 @@ class MyInvestmentsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return InkWell(
-      onTap: () {
-        // Determina la pantalla a la que debe navegar según la tarjeta clicada
-        if (texto1 == 'Editar fotos') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PhotoEditor()),
-          );
-        } else if (texto1 == 'Estilo Artístico') {
-          // Navegar a otra pantalla según la tarjeta
-          // Puedes agregar más condiciones según las tarjetas que tengas
-        } else if (texto1 == 'Recuerdos\ndel Pasado') {
-          // Navegar a otra pantalla según la tarjeta
-          // Puedes agregar más condiciones según las tarjetas que tengas
-        } else if (texto1 == 'Personajes\nen tus fotos') {
-          // Navegar a otra pantalla según la tarjeta
-          // Puedes agregar más condiciones según las tarjetas que tengas
-=======
     return GestureDetector(
       onTap: () async {
         print('Clic en $texto1');
 
         final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
         if (pickedFile != null) {
           print('Imagen seleccionada: ${pickedFile.path}');
@@ -353,17 +232,12 @@ class MyInvestmentsCard extends StatelessWidget {
               builder: (context) => EditPhotoScreen(imagePath: pickedFile.path),
             ),
           );
->>>>>>> 69ce224 (Can just select image NO edit)
         }
       },
       child: Column(
         children: <Widget>[
           Container(
-<<<<<<< HEAD
-            margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
-=======
             margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
->>>>>>> 69ce224 (Can just select image NO edit)
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
@@ -372,11 +246,7 @@ class MyInvestmentsCard extends StatelessWidget {
               ),
             ),
             child: Container(
-<<<<<<< HEAD
-              height: 120,
-=======
               height: 130,
->>>>>>> 69ce224 (Can just select image NO edit)
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -397,11 +267,7 @@ class MyInvestmentsCard extends StatelessWidget {
                       texto1,
                       style: GoogleFonts.poppins(
                         color: Colors.white,
-<<<<<<< HEAD
-                        fontSize: 17,
-=======
                         fontSize: 18,
->>>>>>> 69ce224 (Can just select image NO edit)
                         fontWeight: FontWeight.w500,
                       ),
                     ),
