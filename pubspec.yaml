@@ -31,17 +31,27 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_slider_drawer: ^2.1.3
+<<<<<<< HEAD
+=======
+  image_picker: ^0.8.4
+  image_editor: ^1.3.0
+  photo_view: ^0.14.0
+#  image_pipeline: ^2.0.0
+>>>>>>> 69ce224 (Can just select image NO edit)
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   google_fonts: ^4.0.4
+<<<<<<< HEAD
   cloudinary_public: ^0.21.0
   image_picker: ^1.0.4
   photo_view: ^0.14.0
   cached_network_image: ^3.3.0
   
+=======
+>>>>>>> 69ce224 (Can just select image NO edit)
 
 dev_dependencies:
   flutter_test:

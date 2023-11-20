@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+<<<<<<< HEAD
 import 'package:auri_proyectate/Screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,18 +14,33 @@ class Sidebar extends StatefulWidget {
 
 class _SidebarState extends State<Sidebar> {
   int selectedIndex = -1;
+=======
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class Sidebar extends StatelessWidget {
+  const Sidebar({super.key, required this.isActive});
+
+  final bool isActive;
+>>>>>>> 69ce224 (Can just select image NO edit)
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
+<<<<<<< HEAD
         padding: EdgeInsets.only(left: 10.0, bottom: 10),
+=======
+        padding: EdgeInsets.only(
+            left: 10.0, bottom: 10), // Ajusta la cantidad de despegue
+>>>>>>> 69ce224 (Can just select image NO edit)
         child: FractionallySizedBox(
           widthFactor: 0.6,
           child: Drawer(
             backgroundColor: Colors.transparent,
             child: BackdropFilter(
               filter: ImageFilter.blur(
+<<<<<<< HEAD
                 sigmaX: 2.5,
                 sigmaY: 2.5,
               ),
@@ -48,6 +64,23 @@ class _SidebarState extends State<Sidebar> {
                         height: 250,
                         child: DrawerHeader(
                           padding: EdgeInsets.symmetric(vertical: 10),
+=======
+                  sigmaX: 2.5,
+                  sigmaY: 2.5), // Ajusta el desenfoque según sea necesario
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Container(
+                  color: Color.fromARGB(255, 218, 240, 255),
+                  child: ListView(
+                    children: [
+                      Container(
+                        height: 200, // Ajusta la altura según sea necesario
+                        child: DrawerHeader(
+                          padding: EdgeInsets.symmetric(vertical: 10),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 218, 240, 255),
+                          ),
+>>>>>>> 69ce224 (Can just select image NO edit)
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +90,12 @@ class _SidebarState extends State<Sidebar> {
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: Colors.white,
+<<<<<<< HEAD
                                     width: 3.0,
+=======
+                                    width:
+                                        3.0, // Ajusta el ancho del borde según tus preferencias
+>>>>>>> 69ce224 (Can just select image NO edit)
                                   ),
                                 ),
                                 child: CircleAvatar(
@@ -70,7 +108,11 @@ class _SidebarState extends State<Sidebar> {
                                 height: 15,
                               ),
                               Text(
+<<<<<<< HEAD
                                 'Diego H',
+=======
+                                'Mr.John',
+>>>>>>> 69ce224 (Can just select image NO edit)
                                 style: GoogleFonts.poppins(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -81,7 +123,11 @@ class _SidebarState extends State<Sidebar> {
                                 height: 2,
                               ),
                               Text(
+<<<<<<< HEAD
                                 'DiegoH@gmail.com',
+=======
+                                'John300@gmail.com',
+>>>>>>> 69ce224 (Can just select image NO edit)
                                 style: GoogleFonts.poppins(
                                   color: Color.fromARGB(255, 75, 75, 75),
                                   fontSize: 12,
@@ -91,6 +137,7 @@ class _SidebarState extends State<Sidebar> {
                           ),
                         ),
                       ),
+<<<<<<< HEAD
                       SizedBox(
                         height: 20,
                       ),
@@ -114,6 +161,53 @@ class _SidebarState extends State<Sidebar> {
                       buildListItem(Icons.exit_to_app_rounded, 'Logout', 4),
                       SizedBox(
                         height: 20,
+=======
+                      Stack(
+                        children: [
+                          AnimatedPositioned(
+                            height: 48, // Altura de la pantalla
+                            width: isActive
+                                ? MediaQuery.of(context).size.width * 0.6 - 6
+                                : 0, // Ancho del 60% de la pantalla
+                            duration: Duration(microseconds: 300),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Color.fromARGB(255, 184, 223, 255),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                            ),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.home),
+                            title: Text('Home'),
+                            onTap: () => onTap(context, 0),
+                          ),
+                        ],
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.person),
+                        title: Text('Profile'),
+                        onTap: () => onTap(context, 0),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.phone),
+                        title: Text('Phone'),
+                        onTap: () => onTap(context, 0),
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text('Settings'),
+                        onTap: () => onTap(context, 0),
+                      ),
+                      Divider(
+                        height: 1,
+                      ),
+                      ListTile(
+                        leading: Icon(Icons.exit_to_app),
+                        title: Text('Logout'),
+                        onTap: () => onTap(context, 0),
+>>>>>>> 69ce224 (Can just select image NO edit)
                       ),
                     ],
                   ),
@@ -125,6 +219,7 @@ class _SidebarState extends State<Sidebar> {
       ),
     );
   }
+<<<<<<< HEAD
 
   Widget buildListItem(IconData icon, String title, int index) {
     return GestureDetector(
@@ -165,3 +260,8 @@ class _SidebarState extends State<Sidebar> {
     }
   }
 }
+=======
+}
+
+onTap(BuildContext context, int i) {}
+>>>>>>> 69ce224 (Can just select image NO edit)
