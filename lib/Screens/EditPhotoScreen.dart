@@ -99,7 +99,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
         print("mamalon $apiUrl");
 
         try {
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(Duration(seconds: 20));
           var response = await http.get(
             headers: {'Authorization': 'Token r8_cbAmgoyJPEbI8rQ4EcUorwso9yArZwY41ixtM',  "Content-Type": "application/json" },
             Uri.parse(apiUrl),
@@ -155,7 +155,7 @@ class _EditPhotoScreenState extends State<EditPhotoScreen> {
               break;
             } else {
               print("La predicción está en proceso. Esperando...");
-              await Future.delayed(Duration(seconds: 5)); // Espera 5 segundos antes de volver a verificar
+              // await Future.delayed(Duration(seconds: 5)); // Espera 5 segundos antes de volver a verificar
             }
           } else {
             print("Error al verificar el estado de la predicción. Código de estado: ${response.statusCode}");
