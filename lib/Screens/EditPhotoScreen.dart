@@ -4,15 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class EditPhotoScreen extends StatelessWidget {
+class EditPhotoScreen extends StatefulWidget {
   final String imagePath;
 
   const EditPhotoScreen({Key? key, required this.imagePath}) : super(key: key);
 
+  @override
+  _EditPhotoScreenState createState() => _EditPhotoScreenState();
+}
+
+class _EditPhotoScreenState extends State<EditPhotoScreen> {
+  String imageUrl = '';
+
   Future<String?> subirImagen() async {
     var clientId = '66f78c6d24dc3c9';
     var url = Uri.parse('https://api.imgur.com/3/image');
-    var file = File(imagePath);
+    var file = File(widget.imagePath);
     var bytes = await file.readAsBytes();
     var headers = {'Authorization': 'Client-ID $clientId'};
 
@@ -104,6 +111,11 @@ class EditPhotoScreen extends StatelessWidget {
             print("Respuesta de Replicate: $responseData");
             var oro = responseData['output'];
             print(oro);
+
+            setState(() {
+              // Actualiza la URL de la imagen en el estado
+              imageUrl = oro;
+            });
           } else {
             print("Error al obtener la respuesta de Replicate. Código de estado: ${response.statusCode}");
             print(response.body);
@@ -111,10 +123,6 @@ class EditPhotoScreen extends StatelessWidget {
         } catch (e) {
           print("Error durante la solicitud a Replicate: $e");
         }
-
-
-
-
 
       }
     } catch (e) {
@@ -169,7 +177,8 @@ class EditPhotoScreen extends StatelessWidget {
         title: Text('Editar Foto'),
       ),
       body: Center(
-        child: Image.file(File(imagePath)),
+        // Muestra la imagen original o la imagen modificada según la URL actual
+        child: imageUrl.isEmpty ? Image.file(File(widget.imagePath)) : Image.network(imageUrl),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
