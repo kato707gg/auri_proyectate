@@ -1,3 +1,4 @@
+import 'package:auri_proyectate/Screens/EditPhotoScreen.dart';
 import 'package:auri_proyectate/Screens/photo_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:auri_proyectate/Components/sidebar.dart';
@@ -204,19 +205,19 @@ class InvestmentTable extends StatelessWidget {
         children: [
           MyInvestmentsCard(
             imagen: 'assets/photo_edit.jpg',
-            texto1: 'Editar fotos',
+            texto: 'Editar fotos',
           ),
           MyInvestmentsCard(
             imagen: 'assets/noche_estrellada.jpg',
-            texto1: 'Estilo Artístico',
+            texto: 'Estilo Artístico',
           ),
           MyInvestmentsCard(
             imagen: 'assets/foto_antigua.jpg',
-            texto1: 'Recuerdos\ndel Pasado',
+            texto: 'Recuerdos\ndel Pasado',
           ),
           MyInvestmentsCard(
             imagen: 'assets/personajes_en_fotos.jpg',
-            texto1: 'Personajes\nen tus fotos',
+            texto: 'Personajes\nen tus fotos',
           ),
         ],
       ),
@@ -226,12 +227,12 @@ class InvestmentTable extends StatelessWidget {
 
 class MyInvestmentsCard extends StatelessWidget {
   final String imagen;
-  final String texto1;
+  final String texto;
 
   const MyInvestmentsCard({
     Key? key,
     required this.imagen,
-    required this.texto1,
+    required this.texto,
   }) : super(key: key);
 
   @override
@@ -239,18 +240,20 @@ class MyInvestmentsCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         // Determina la pantalla a la que debe navegar según la tarjeta clicada
-        if (texto1 == 'Editar fotos') {
+        if (texto == 'Editar fotos') {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PhotoEditor()),
           );
-        } else if (texto1 == 'Estilo Artístico') {
-          // Navegar a otra pantalla según la tarjeta
-          // Puedes agregar más condiciones según las tarjetas que tengas
-        } else if (texto1 == 'Recuerdos\ndel Pasado') {
-          // Navegar a otra pantalla según la tarjeta
-          // Puedes agregar más condiciones según las tarjetas que tengas
-        } else if (texto1 == 'Personajes\nen tus fotos') {
+        } else if (texto == 'Estilo Artístico') {
+        } else if (texto == 'Recuerdos\ndel Pasado') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditPhotoScreen(),
+            ),
+          );
+        } else if (texto == 'Personajes\nen tus fotos') {
           // Navegar a otra pantalla según la tarjeta
           // Puedes agregar más condiciones según las tarjetas que tengas
         }
@@ -285,7 +288,7 @@ class MyInvestmentsCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      texto1,
+                      texto,
                       style: GoogleFonts.poppins(
                         color: Colors.white,
                         fontSize: 17,
