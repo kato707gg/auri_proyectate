@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import 'package:auri_proyectate/Screens/EditPhotoScreen.dart';
 import 'package:auri_proyectate/Screens/photo_editor.dart';
+=======
+import 'dart:io';
+>>>>>>> d37bca496308de9b8086d89e4f7bf16caff2accf
 import 'package:flutter/material.dart';
 import 'package:auri_proyectate/Components/sidebar.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'EditPhotoScreen.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -14,7 +21,9 @@ class HomePage extends StatelessWidget {
           Homebody(),
         ],
       ),
-      drawer: Sidebar(),
+      drawer: Sidebar(
+        isActive: false,
+      ),
     );
   }
 }
@@ -29,9 +38,9 @@ class BackGround extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: [0.1, 0.5],
+          stops: [0.1, 1.0],
           colors: [
-            Color.fromARGB(255, 218, 249, 255),
+            Color.fromARGB(255, 218, 219, 255),
             Color.fromARGB(255, 255, 255, 255),
           ],
         ),
@@ -90,14 +99,14 @@ class SidebarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 20),
+      margin: const EdgeInsets.only(left: 11),
       child: ElevatedButton(
         onPressed: () {
           Scaffold.of(context).openDrawer();
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
-          backgroundColor: Color.fromARGB(255, 240, 237, 255),
+          backgroundColor: Colors.white,
           padding: const EdgeInsets.all(12),
           elevation: 5,
         ),
@@ -110,85 +119,59 @@ class SidebarButton extends StatelessWidget {
   }
 }
 
-//EN ESTA BRANCH VOY A ESTAR HACIENDO CAMBIOS
 class Title extends StatelessWidget {
-  const Title({Key? key});
+  const Title({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          RichText(
-            text: TextSpan(
-              style: GoogleFonts.quicksand(
-                letterSpacing: null,
-                fontSize: 35,
-                fontWeight: FontWeight.w500,
-                color: const Color.fromARGB(255, 0, 0, 0),
-              ),
-              children: [
-                TextSpan(
-                  text: 'A',
-                  style: TextStyle(color: Color.fromARGB(255, 131, 33, 243)),
-                ),
-                TextSpan(text: 'UR'),
-                TextSpan(
-                  text: 'I',
-                  style: TextStyle(color: Color.fromARGB(255, 131, 33, 243)),
-                ),
-              ],
-            ),
-            textAlign: TextAlign.end,
-          ),
-          SizedBox(
-            height: 60,
-            child: Image.asset(
-              'assets/rana.png',
-              fit: BoxFit.contain,
-            ),
-          ),
-        ],
+      child: Text(
+        'Desbloquea el poder del la IA',
+        style: GoogleFonts.quicksand(
+          fontSize: 35,
+          fontWeight: FontWeight.w900,
+          color: Colors.black,
+        ),
+        maxLines: 2,
+        textAlign: TextAlign.end,
       ),
     );
   }
 }
 
 class SubTitle extends StatelessWidget {
-  const SubTitle({Key? key});
+  const SubTitle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 27),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 25),
-          Text(
-            'Descubre el poder de la IA',
+    return Column(
+      children: [
+        SizedBox(height: 25),
+        Align(
+          alignment: Alignment
+              .topCenter, // Alinea el segundo elemento en la parte superior derecha
+          child: Text(
+            'Obten las mejores fotos y',
             style: GoogleFonts.poppins(
-              fontSize: 35,
-              fontWeight: FontWeight.w600,
-              color: Color.fromARGB(255, 45, 45, 85),
-            ),
-            textAlign: TextAlign.center,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: const Color.fromARGB(255, 85, 85, 85)),
           ),
-          SizedBox(height: 15),
-          Text(
-            'Obten las mejores fotos y aumenta\ntu productividad',
+        ),
+        Align(
+          alignment: Alignment
+              .topCenter, // Alinea el segundo elemento en la parte superior derecha
+          child: Text(
+            'aumenta tu productividad',
             style: GoogleFonts.poppins(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: const Color.fromARGB(255, 85, 85, 85),
-            ),
-            textAlign: TextAlign.center,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: const Color.fromARGB(255, 85, 85, 85)),
           ),
-          SizedBox(height: 25),
-        ],
-      ),
+        ),
+        SizedBox(height: 25),
+      ],
     );
   }
 }
@@ -237,14 +220,31 @@ class MyInvestmentsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return InkWell(
       onTap: () {
         // Determina la pantalla a la que debe navegar según la tarjeta clicada
         if (texto == 'Editar fotos') {
+=======
+    return GestureDetector(
+      onTap: () async {
+        print('Clic en $texto1');
+
+        final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+        if (pickedFile != null) {
+          print('Imagen seleccionada: ${pickedFile.path}');
+
+          // Navegar a la pantalla de edición con la imagen seleccionada
+>>>>>>> d37bca496308de9b8086d89e4f7bf16caff2accf
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => PhotoEditor()),
+            MaterialPageRoute(
+              builder: (context) => EditPhotoScreen(imagePath: pickedFile.path),
+            ),
           );
+<<<<<<< HEAD
         } else if (texto == 'Estilo Artístico') {
         } else if (texto == 'Recuerdos\ndel Pasado') {
           Navigator.push(
@@ -256,12 +256,14 @@ class MyInvestmentsCard extends StatelessWidget {
         } else if (texto == 'Personajes\nen tus fotos') {
           // Navegar a otra pantalla según la tarjeta
           // Puedes agregar más condiciones según las tarjetas que tengas
+=======
+>>>>>>> d37bca496308de9b8086d89e4f7bf16caff2accf
         }
       },
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
+            margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
@@ -270,7 +272,7 @@ class MyInvestmentsCard extends StatelessWidget {
               ),
             ),
             child: Container(
-              height: 120,
+              height: 130,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -291,7 +293,7 @@ class MyInvestmentsCard extends StatelessWidget {
                       texto,
                       style: GoogleFonts.poppins(
                         color: Colors.white,
-                        fontSize: 17,
+                        fontSize: 18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

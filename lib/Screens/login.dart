@@ -1,7 +1,7 @@
 import 'package:auri_proyectate/Components/my_button.dart';
+import 'package:auri_proyectate/Components/my_label.dart';
 import 'package:auri_proyectate/Screens/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -40,7 +40,7 @@ class Background extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/Fondooo.jpeg'),
+          image: AssetImage('assets/Fondo.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -69,14 +69,10 @@ class _HomebodyState extends State<Homebody> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
+          LabelUtils.buildTextLabel(
             'Iniciar sesión',
-            style: GoogleFonts.quicksand(
-              fontSize: 37,
-              fontWeight: FontWeight.w800,
-              color: Color.fromARGB(255, 45, 45, 85),
-            ),
-            textAlign: TextAlign.center,
+            37,
+            FontWeight.w800,
           ),
           SizedBox(height: 20),
           buildInputField('Nombre de usuario'),
