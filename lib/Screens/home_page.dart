@@ -14,16 +14,13 @@ class HomePage extends StatelessWidget {
           Homebody(),
         ],
       ),
-      drawer: Sidebar(
-        isActive: false,
-      ),
+      drawer: Sidebar(),
     );
   }
 }
 
 class BackGround extends StatelessWidget {
   const BackGround({Key? key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,9 +28,9 @@ class BackGround extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          stops: [0.1, 1.0],
+          stops: [0.1, 0.5],
           colors: [
-            Color.fromARGB(255, 218, 219, 255),
+            Color.fromARGB(255, 218, 249, 255),
             Color.fromARGB(255, 255, 255, 255),
           ],
         ),
@@ -44,7 +41,6 @@ class BackGround extends StatelessWidget {
 
 class Homebody extends StatelessWidget {
   const Homebody({Key? key});
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -61,7 +57,6 @@ class Homebody extends StatelessWidget {
 
 class TitleWithButton extends StatelessWidget {
   const TitleWithButton({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -88,18 +83,17 @@ class TitleWithButton extends StatelessWidget {
 
 class SidebarButton extends StatelessWidget {
   const SidebarButton({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 11),
+      margin: const EdgeInsets.only(left: 20),
       child: ElevatedButton(
         onPressed: () {
           Scaffold.of(context).openDrawer();
         },
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromARGB(255, 240, 237, 255),
           padding: const EdgeInsets.all(12),
           elevation: 5,
         ),
@@ -112,66 +106,89 @@ class SidebarButton extends StatelessWidget {
   }
 }
 
+//EN ESTA BRANCH VOY A ESTAR HACIENDO CAMBIOS
 class Title extends StatelessWidget {
-  const Title({Key? key}) : super(key: key);
-
+  const Title({Key? key});
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 0, right: 20),
-      child: Text(
-        'Desbloquea el poder del la IA',
-        style: GoogleFonts.quicksand(
-          fontSize: 35,
-          fontWeight: FontWeight.w900,
-          color: Colors.black,
-        ),
-        maxLines: 2,
-        textAlign: TextAlign.end,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          RichText(
+            text: TextSpan(
+              style: GoogleFonts.quicksand(
+                letterSpacing: null,
+                fontSize: 35,
+                fontWeight: FontWeight.w500,
+                color: const Color.fromARGB(255, 0, 0, 0),
+              ),
+              children: [
+                TextSpan(
+                  text: 'A',
+                  style: TextStyle(color: Color.fromARGB(255, 131, 33, 243)),
+                ),
+                TextSpan(text: 'UR'),
+                TextSpan(
+                  text: 'I',
+                  style: TextStyle(color: Color.fromARGB(255, 131, 33, 243)),
+                ),
+              ],
+            ),
+            textAlign: TextAlign.end,
+          ),
+          SizedBox(
+            height: 60,
+            child: Image.asset(
+              'assets/rana.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class SubTitle extends StatelessWidget {
-  const SubTitle({Key? key}) : super(key: key);
-
+  const SubTitle({Key? key});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 25),
-        Align(
-          alignment: Alignment
-              .topCenter, // Alinea el segundo elemento en la parte superior derecha
-          child: Text(
-            'Obten las mejores fotos y',
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 27),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 25),
+          Text(
+            'Descubre el poder de la IA',
             style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: const Color.fromARGB(255, 85, 85, 85)),
+              fontSize: 35,
+              fontWeight: FontWeight.w600,
+              color: Color.fromARGB(255, 45, 45, 85),
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-        Align(
-          alignment: Alignment
-              .topCenter, // Alinea el segundo elemento en la parte superior derecha
-          child: Text(
-            'aumenta tu productividad',
+          SizedBox(height: 15),
+          Text(
+            'Obten las mejores fotos y aumenta\ntu productividad',
             style: GoogleFonts.poppins(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                color: const Color.fromARGB(255, 85, 85, 85)),
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: const Color.fromARGB(255, 85, 85, 85),
+            ),
+            textAlign: TextAlign.center,
           ),
-        ),
-        SizedBox(height: 25),
-      ],
+          SizedBox(height: 25),
+        ],
+      ),
     );
   }
 }
 
 class InvestmentTable extends StatelessWidget {
   const InvestmentTable({Key? key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -204,13 +221,11 @@ class InvestmentTable extends StatelessWidget {
 class MyInvestmentsCard extends StatelessWidget {
   final String imagen;
   final String texto;
-
   const MyInvestmentsCard({
     Key? key,
     required this.imagen,
     required this.texto,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -237,7 +252,7 @@ class MyInvestmentsCard extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.fromLTRB(20, 0, 20, 20),
+            margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
@@ -246,7 +261,7 @@ class MyInvestmentsCard extends StatelessWidget {
               ),
             ),
             child: Container(
-              height: 130,
+              height: 120,
               padding: EdgeInsets.all(20),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
@@ -267,7 +282,7 @@ class MyInvestmentsCard extends StatelessWidget {
                       texto,
                       style: GoogleFonts.poppins(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 17,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 
 class EditPhotoScreen extends StatelessWidget {
   const EditPhotoScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +41,6 @@ class Background extends StatelessWidget {
 
 class Title extends StatelessWidget {
   const Title({Key? key});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -88,11 +86,9 @@ class _HomeBodyState extends State<HomeBody> {
   UniqueKey _key = UniqueKey();
   bool _isHoldingImage = false;
   bool _imageSelected = false;
-
   Future<void> _pickImage() async {
     final pickedFile =
         await ImagePicker().pickImage(source: ImageSource.gallery);
-
     if (pickedFile != null) {
       setState(() {
         _selectedImage = File(pickedFile.path);
@@ -106,20 +102,16 @@ class _HomeBodyState extends State<HomeBody> {
     if (_selectedImage == null) {
       return null;
     }
-
     var clientId = '66f78c6d24dc3c9';
     var url = Uri.parse('https://api.imgur.com/3/image');
     var bytes = await _selectedImage!.readAsBytes();
     var headers = {'Authorization': 'Client-ID $clientId'};
-
     var request = http.MultipartRequest('POST', url)
       ..headers.addAll(headers)
       ..files
           .add(http.MultipartFile.fromBytes('image', bytes, filename: 'image'));
-
     try {
       var response = await http.Response.fromStream(await request.send());
-
       if (response.statusCode == 200) {
         var responseData = json.decode(response.body);
         var link = responseData['data']['link'];
@@ -133,20 +125,16 @@ class _HomeBodyState extends State<HomeBody> {
     } catch (e) {
       print("Error durante la solicitud: $e");
     }
-
     return null; // Retorna null en caso de error
   }
 
   Future<String?> _makePredictionAndGetImageUrl() async {
     var imageUri = await _uploadImage();
-
     if (imageUri == null) {
       return null;
     }
-
     final String apiUrl = "https://api.replicate.com/v1/predictions";
     final String authToken = "Token r8_cbAmgoyJPEbI8rQ4EcUorwso9yArZwY41ixtM";
-
     try {
       final response = await http.post(
         headers: {
@@ -160,17 +148,14 @@ class _HomeBodyState extends State<HomeBody> {
         }),
         Uri.parse(apiUrl),
       );
-
       if (response.statusCode == 200) {
         var responseData = json.decode(response.body);
         var predictionId = responseData['id'];
         print("ID del resultado: $predictionId");
-
         // Genera la apiUrl para obtener la imagen modificada
         var modifiedImageUrl =
             "https://api.replicate.com/v1/predictions/$predictionId";
         print("API URL para la imagen modificada: $modifiedImageUrl");
-
         return modifiedImageUrl;
       } else {
         print(
@@ -186,30 +171,24 @@ class _HomeBodyState extends State<HomeBody> {
 
   Future<void> _checkPredictionStatusAndFetchImage() async {
     var predictionId = await _makePredictionAndGetImageUrl();
-
     if (predictionId != null) {
       var predictionStatusUrl =
           "https://api.replicate.com/v1/predictions/$predictionId";
       print("Verificando el estado de la predicción en $predictionStatusUrl");
-
       while (true) {
         try {
           var response = await http.get(Uri.parse(predictionStatusUrl));
-
           if (response.statusCode == 200) {
             var statusResponse = json.decode(response.body);
             var predictionStatus = statusResponse['status'];
-
             if (predictionStatus == 'succeeded') {
               var modifiedImageUrl = statusResponse['urls']['result'];
               print(
                   "La predicción ha tenido éxito. Enlace de la imagen modificada: $modifiedImageUrl");
-
               setState(() {
                 // Actualiza la URL de la imagen en el estado
                 _imageUrl = modifiedImageUrl;
               });
-
               break;
             } else if (predictionStatus == 'failed') {
               print(

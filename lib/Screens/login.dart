@@ -1,11 +1,10 @@
 import 'package:auri_proyectate/Components/my_button.dart';
-import 'package:auri_proyectate/Components/my_label.dart';
 import 'package:auri_proyectate/Screens/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,13 +33,12 @@ class LoginPage extends StatelessWidget {
 
 class Background extends StatelessWidget {
   const Background({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/Fondo.jpg'),
+          image: AssetImage('assets/Fondooo.jpeg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -50,14 +48,12 @@ class Background extends StatelessWidget {
 
 class Homebody extends StatefulWidget {
   const Homebody({Key? key}) : super(key: key);
-
   @override
   _HomebodyState createState() => _HomebodyState();
 }
 
 class _HomebodyState extends State<Homebody> {
   bool _showPassword = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -69,10 +65,14 @@ class _HomebodyState extends State<Homebody> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          LabelUtils.buildTextLabel(
+          Text(
             'Iniciar sesión',
-            37,
-            FontWeight.w800,
+            style: GoogleFonts.quicksand(
+              fontSize: 37,
+              fontWeight: FontWeight.w800,
+              color: Color.fromARGB(255, 45, 45, 85),
+            ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: 20),
           buildInputField('Nombre de usuario'),
