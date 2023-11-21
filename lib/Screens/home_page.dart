@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import 'package:auri_proyectate/Screens/EditPhotoScreen.dart';
 import 'package:auri_proyectate/Screens/photo_editor.dart';
-=======
-import 'dart:io';
->>>>>>> d37bca496308de9b8086d89e4f7bf16caff2accf
 import 'package:flutter/material.dart';
 import 'package:auri_proyectate/Components/sidebar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-
-import 'EditPhotoScreen.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -220,31 +213,14 @@ class MyInvestmentsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< HEAD
     return InkWell(
       onTap: () {
         // Determina la pantalla a la que debe navegar según la tarjeta clicada
         if (texto == 'Editar fotos') {
-=======
-    return GestureDetector(
-      onTap: () async {
-        print('Clic en $texto1');
-
-        final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-        if (pickedFile != null) {
-          print('Imagen seleccionada: ${pickedFile.path}');
-
-          // Navegar a la pantalla de edición con la imagen seleccionada
->>>>>>> d37bca496308de9b8086d89e4f7bf16caff2accf
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => EditPhotoScreen(imagePath: pickedFile.path),
-            ),
+            MaterialPageRoute(builder: (context) => PhotoEditor()),
           );
-<<<<<<< HEAD
         } else if (texto == 'Estilo Artístico') {
         } else if (texto == 'Recuerdos\ndel Pasado') {
           Navigator.push(
@@ -256,8 +232,6 @@ class MyInvestmentsCard extends StatelessWidget {
         } else if (texto == 'Personajes\nen tus fotos') {
           // Navegar a otra pantalla según la tarjeta
           // Puedes agregar más condiciones según las tarjetas que tengas
-=======
->>>>>>> d37bca496308de9b8086d89e4f7bf16caff2accf
         }
       },
       child: Column(
