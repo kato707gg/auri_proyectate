@@ -414,10 +414,8 @@ class SingleSlider extends StatelessWidget {
               onPressed: () {
                 onChanged(0.0);
               },
-              backgroundColor: Color.fromARGB(255, 93, 95, 197),
-              child: Container(
-                width: 10,
-              ),
+              backgroundColor: Color.fromARGB(255, 192, 231, 255),
+              textColor: Colors.black,
             ),
             if (_selectedAdjustment == AdjustType.Brightness ||
                 _selectedAdjustment == AdjustType.Contrast ||
@@ -428,10 +426,8 @@ class SingleSlider extends StatelessWidget {
                 onPressed: () {
                   onAutomaticPressed?.call();
                 },
-                backgroundColor: Color.fromARGB(255, 93, 95, 197),
-                child: Container(
-                  width: 10,
-                ),
+                backgroundColor: Color.fromARGB(255, 192, 231, 255),
+                textColor: Colors.black,
               ),
           ],
         ),

@@ -21,7 +21,6 @@ class ButtonUtils {
         ),
       ),
       child: Container(
-        width: double.infinity,
         height: 45,
         alignment: Alignment.center,
         child: Text(

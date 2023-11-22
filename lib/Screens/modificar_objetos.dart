@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-import 'package:auri_proyectate/Screens/photo_editor.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,6 +9,7 @@ class ModificarObjetos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           BackGround(),
@@ -81,33 +81,45 @@ class HomeBody extends StatefulWidget {
 }
 
 enum AdjustType {
-  Brightness,
-  Contrast,
-  Saturation,
+  Reemplazar,
+  Remover,
+  //Recolorear,
 }
 
-// Variable para almacenar el tipo de ajuste seleccionado
-AdjustType _selectedAdjustment = AdjustType.Brightness;
+AdjustType _selectedAdjustment = AdjustType.Reemplazar;
 
 class _HomeBodyState extends State<HomeBody> {
   File? _selectedImage;
   String _from = '';
   String _to = '';
+  String _prompt = '';
+  String _recolor = '';
   String? _transformedImageUrl;
   UniqueKey _key = UniqueKey();
   bool _isHoldingImage = false;
   bool _imageSelected = false;
-  late Timer _debounce;
+
+  // Mapa para almacenar las transformaciones por tipo de ajuste
+  Map<AdjustType, String?> _transformations = {};
+
+  // Método para obtener la transformación actual para el tipo de ajuste dado
+  String? _getCurrentTransformation() {
+    return _transformations[_selectedAdjustment];
+  }
+
+  // Método para actualizar la transformación actual para el tipo de ajuste dado
+  void _updateCurrentTransformation(String? transformedImageUrl) {
+    _transformations[_selectedAdjustment] = transformedImageUrl;
+    setState(() {
+      _transformedImageUrl = transformedImageUrl;
+      _key = UniqueKey();
+    });
+  }
 
   final CloudinaryPublic _cloudinary = CloudinaryPublic(
     'dq4nxmjmd',
     'auriproyectate',
   );
-
-  void _debounceAction(VoidCallback action) {
-    if (_debounce.isActive) _debounce.cancel();
-    _debounce = Timer(const Duration(milliseconds: 1), action);
-  }
 
   void _updateImage() {
     _uploadAndTransformImage();
@@ -141,14 +153,26 @@ class _HomeBodyState extends State<HomeBody> {
       );
 
       final cloudinaryResponse = await _cloudinary.uploadFile(cloudinaryFile);
+      final publicId = cloudinaryResponse.publicId;
+      final transform = _cloudinary.getImage(publicId).transform();
 
-      // Transform the image with brightness and contrast adjustments
-      final transformedImageUrl = _cloudinary
-          .getImage(cloudinaryResponse.publicId)
-          .transform()
-          .effect('gen_replace:from_${_from}')
-          .effect(';')
-          .effect('to_:${_to}');
+      if (_selectedAdjustment == AdjustType.Reemplazar) {
+        transform.effect('gen_replace:from_$_from;to_$_to');
+      } else if (_selectedAdjustment == AdjustType.Remover) {
+        transform.effect('gen_remove:prompt_$_prompt');
+      } else {
+        transform.effect('gen_recolor:prompt_$_prompt');
+      }
+
+      final transformedImageUrl = transform.generate();
+
+      // Actualizar la transformación actual para el tipo de ajuste seleccionado
+      _updateCurrentTransformation(transformedImageUrl);
+
+      setState(() {
+        _transformedImageUrl = transformedImageUrl;
+        _key = UniqueKey();
+      });
 
       // Now you can use transformedImageUrl to display the edited image
       print('Transformed Image URL: $transformedImageUrl');
@@ -163,7 +187,7 @@ class _HomeBodyState extends State<HomeBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Title(),
+        Title(),
         Expanded(
           child: GestureDetector(
             onTap: () {
@@ -186,19 +210,21 @@ class _HomeBodyState extends State<HomeBody> {
               );
             },
             child: Container(
-              margin: EdgeInsets.only(left: 30, top: 15, right: 30, bottom: 15),
+              margin: EdgeInsets.all(30),
               width: double.infinity,
               decoration: BoxDecoration(
-                  color: _imageSelected
-                      ? Colors.transparent
-                      : Color.fromARGB(55, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(10)),
+                color: _imageSelected
+                    ? Colors.transparent
+                    : Color.fromARGB(55, 255, 255, 255),
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
                   Visibility(
                     visible: !_isHoldingImage && _transformedImageUrl != null,
-                    child: _transformedImageUrl != null
+                    child: _transformedImageUrl != null &&
+                            Uri.parse(_transformedImageUrl!).isAbsolute
                         ? Image.network(
                             _transformedImageUrl!,
                             key: _key,
@@ -232,49 +258,90 @@ class _HomeBodyState extends State<HomeBody> {
             ),
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: AdjustPhotoTable(
-                onAdjustSelected: (adjustType) {
-                  setState(() {
-                    _selectedAdjustment = adjustType;
-                  });
-                },
-              ),
-            ),
-          ],
+        ModifyButtonTable(
+          onModifySelected: (adjustType) {
+            setState(() {
+              _selectedAdjustment = adjustType;
+            });
+          },
         ),
+        if (_selectedAdjustment == AdjustType.Reemplazar) ...[
+          PromptInput(
+            key: UniqueKey(), // Asegúrate de tener una clave única
+            onChanged: (value) {
+              _from = value;
+            },
+            label: 'Objeto que se reemplazará',
+            icon: Icons.check,
+          ),
+          PromptInput(
+            key: UniqueKey(), // Otra clave única para el segundo PromptInput
+            onChanged: (value) {
+              _to = value;
+            },
+            onSubmitted: _updateImage,
+            label: 'Objeto que será reemplazado',
+            icon: Icons.near_me,
+          ),
+        ] else ...[
+          PromptInput(
+            onChanged: (value) {
+              _prompt = value;
+            },
+            onSubmitted: _updateImage,
+            label: 'Objeto a modificar',
+            icon: Icons.near_me,
+          ),
+        ],
       ],
     );
   }
 }
 
-class AdjustPhotoTable extends StatelessWidget {
-  final Function(AdjustType) onAdjustSelected;
+String getLabelForAdjustType(AdjustType adjustType) {
+  switch (adjustType) {
+    case AdjustType.Reemplazar:
+      return 'Reemplzar';
+    case AdjustType.Remover:
+      return 'Remover';
+    /*case AdjustType.Recolorear:
+      return 'Recolorear';*/
+  }
+}
 
-  AdjustPhotoTable({
+AssetImage getImageForAdjustType(AdjustType adjustType) {
+  switch (adjustType) {
+    case AdjustType.Reemplazar:
+      return AssetImage('assets/reemplazar.png');
+    case AdjustType.Remover:
+      return AssetImage('assets/goma.png');
+    /*case AdjustType.Recolorear:
+      return AssetImage('assets/brocha.png');*/
+  }
+}
+
+class ModifyButtonTable extends StatelessWidget {
+  final Function(AdjustType) onModifySelected;
+
+  ModifyButtonTable({
     Key? key,
-    required this.onAdjustSelected,
+    required this.onModifySelected,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: AdjustType.values.map((adjustType) {
           return Expanded(
-            child: AdjustPhoto(
+            child: ModifyButton(
               imagen: getImageForAdjustType(adjustType),
               texto1: getLabelForAdjustType(adjustType),
-              onAdjustSelected: (type) {
-                onAdjustSelected(type);
+              onModifySelected: (type) {
+                onModifySelected(type);
               },
-              adjustmentType: adjustType,
+              modifyType: adjustType,
               isSelected: _selectedAdjustment == adjustType,
             ),
           );
@@ -284,61 +351,39 @@ class AdjustPhotoTable extends StatelessWidget {
   }
 }
 
-String getLabelForAdjustType(AdjustType adjustType) {
-  switch (adjustType) {
-    case AdjustType.Brightness:
-      return 'Reemplzar';
-    case AdjustType.Contrast:
-      return 'Remover';
-    case AdjustType.Saturation:
-      return 'Recolorear';
-  }
-}
-
-AssetImage getImageForAdjustType(AdjustType adjustType) {
-  switch (adjustType) {
-    case AdjustType.Brightness:
-      return AssetImage('assets/reemplazar.png');
-    case AdjustType.Contrast:
-      return AssetImage('assets/goma.png');
-    case AdjustType.Saturation:
-      return AssetImage('assets/brocha.png');
-  }
-}
-
-class AdjustPhoto extends StatefulWidget {
+class ModifyButton extends StatefulWidget {
   final AssetImage imagen;
   final String texto1;
-  final Function(AdjustType) onAdjustSelected;
-  final AdjustType adjustmentType;
+  final Function(AdjustType) onModifySelected;
+  final AdjustType modifyType;
   final bool isSelected;
 
-  const AdjustPhoto({
+  const ModifyButton({
     Key? key,
     required this.imagen,
     required this.texto1,
-    required this.onAdjustSelected,
-    required this.adjustmentType,
+    required this.onModifySelected,
+    required this.modifyType,
     required this.isSelected,
   }) : super(key: key);
 
   @override
-  _AdjustPhotoState createState() => _AdjustPhotoState();
+  _ModifyButtonState createState() => _ModifyButtonState();
 }
 
-class _AdjustPhotoState extends State<AdjustPhoto> {
+class _ModifyButtonState extends State<ModifyButton> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ElevatedButton(
           onPressed: () {
-            widget.onAdjustSelected(widget.adjustmentType);
+            widget.onModifySelected(widget.modifyType);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: widget.isSelected
-                ? Color.fromARGB(255, 192, 231, 255)
+                ? Color.fromARGB(255, 211, 204, 255)
                 : Color.fromARGB(255, 255, 255, 255),
             fixedSize: Size(0, 70),
             shape: CircleBorder(side: BorderSide.none),
@@ -360,7 +405,72 @@ class _AdjustPhotoState extends State<AdjustPhoto> {
             color: Color.fromARGB(255, 255, 255, 255),
           ),
         ),
+        SizedBox(
+          height: 20,
+        )
       ],
+    );
+  }
+}
+
+class PromptInput extends StatelessWidget {
+  final String label;
+  final ValueChanged<String> onChanged;
+  final IconData? icon;
+  final VoidCallback? onSubmitted;
+
+  PromptInput({
+    Key? key,
+    required this.onChanged,
+    required this.label,
+    this.icon,
+    this.onSubmitted,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          TextFormField(
+            style: GoogleFonts.poppins(
+              fontSize: 12,
+              color: Color.fromARGB(255, 255, 255, 255),
+              fontWeight: FontWeight.w500,
+            ),
+            decoration: InputDecoration(
+              labelText: label,
+              suffixIconColor: Colors.white,
+              suffixIcon: IconButton(
+                icon: Icon(icon),
+                onPressed:
+                    onSubmitted, // Llama a la función cuando se presiona el ícono
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  width: 1.7,
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                ),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              labelStyle: GoogleFonts.poppins(
+                color: Color.fromARGB(185, 221, 221, 221),
+              ),
+            ),
+            onChanged: onChanged,
+            onFieldSubmitted: (value) {
+              if (onSubmitted != null) {
+                onSubmitted!();
+              }
+            },
+          ),
+          SizedBox(
+            height: 20,
+          )
+        ],
+      ),
     );
   }
 }

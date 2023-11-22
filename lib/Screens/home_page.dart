@@ -201,10 +201,10 @@ class InvestmentTable extends StatelessWidget {
             imagen: 'assets/photo_edit.jpg',
             texto: 'Editar fotos',
           ),
-          MyInvestmentsCard(
+          /*MyInvestmentsCard(
             imagen: 'assets/noche_estrellada.jpg',
             texto: 'Estilo Artístico',
-          ),
+          ),*/
           MyInvestmentsCard(
             imagen: 'assets/foto_antigua.jpg',
             texto: 'Recuerdos\ndel Pasado',
