@@ -9,6 +9,7 @@ class ButtonUtils {
     Color textColor = Colors.white,
     Color backgroundColor = const Color(0xFF8A47FF), // Color predeterminado
     Color? labelColor,
+    Container? child,
   }) {
     return ElevatedButton(
       onPressed: onPressed,

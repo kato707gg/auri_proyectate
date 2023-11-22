@@ -1,4 +1,5 @@
 import 'package:auri_proyectate/Screens/EditPhotoScreen.dart';
+import 'package:auri_proyectate/Screens/modificar_objetos.dart';
 import 'package:auri_proyectate/Screens/photo_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:auri_proyectate/Components/sidebar.dart';
@@ -209,8 +210,8 @@ class InvestmentTable extends StatelessWidget {
             texto: 'Recuerdos\ndel Pasado',
           ),
           MyInvestmentsCard(
-            imagen: 'assets/personajes_en_fotos.jpg',
-            texto: 'Personajes\nen tus fotos',
+            imagen: 'assets/modificar_imagen.jpg',
+            texto: 'Modificar objetos\nen imagen',
           ),
         ],
       ),
@@ -244,9 +245,13 @@ class MyInvestmentsCard extends StatelessWidget {
               builder: (context) => EditPhotoScreen(),
             ),
           );
-        } else if (texto == 'Personajes\nen tus fotos') {
-          // Navegar a otra pantalla según la tarjeta
-          // Puedes agregar más condiciones según las tarjetas que tengas
+        } else if (texto == 'Modificar objetos\nen imagen') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ModificarObjetos(),
+            ),
+          );
         }
       },
       child: Column(

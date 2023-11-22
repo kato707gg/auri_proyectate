@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:auri_proyectate/Components/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -407,39 +408,29 @@ class SingleSlider extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            ElevatedButton(
+            ButtonUtils.buildElevatedButton(
+              context: context,
+              label: 'Reset',
               onPressed: () {
                 onChanged(0.0);
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color.fromARGB(255, 255, 255, 255),
-              ),
-              child: Text(
-                'Reset',
-                style: GoogleFonts.quicksand(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.black,
-                ),
+              backgroundColor: Color.fromARGB(255, 93, 95, 197),
+              child: Container(
+                width: 10,
               ),
             ),
             if (_selectedAdjustment == AdjustType.Brightness ||
                 _selectedAdjustment == AdjustType.Contrast ||
                 _selectedAdjustment == AdjustType.Saturation)
-              ElevatedButton(
+              ButtonUtils.buildElevatedButton(
+                context: context,
+                label: 'Automático',
                 onPressed: () {
                   onAutomaticPressed?.call();
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
-                ),
-                child: Text(
-                  'Automático',
-                  style: GoogleFonts.quicksand(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
+                backgroundColor: Color.fromARGB(255, 93, 95, 197),
+                child: Container(
+                  width: 10,
                 ),
               ),
           ],
@@ -486,8 +477,6 @@ class _AdjustPhotoTableState extends State<AdjustPhotoTable> {
       SizedBox(
           width: MediaQuery.of(context).size.width / 2.7), // Padding al final
     ];
-
-// Ancho de los botones
 
     return Container(
       height: 150,

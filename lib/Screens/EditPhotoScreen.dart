@@ -298,7 +298,7 @@ class _HomeBodyState extends State<HomeBody> {
                   context: context,
                   label: 'Transformar',
                   onPressed: _checkPredictionStatusAndFetchImage,
-                  backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                  backgroundColor: Color.fromARGB(255, 255, 233, 204),
                   textColor: Colors.black),
               SizedBox(
                 height: 30,
