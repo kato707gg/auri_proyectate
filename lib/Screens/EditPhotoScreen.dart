@@ -158,9 +158,10 @@ class _HomeBodyState extends State<HomeBody> {
         print("API URL para la imagen modificada: $modifiedImageUrl");
         return modifiedImageUrl;
       } else {
-        print(
-            "Error durante la solicitud de predicción. Código de estado: ${response.statusCode}");
         print("BODY: ${response.body}");
+        var responseData = json.decode(response.body);
+        var predictionId = responseData['id'];
+        return predictionId;
         return null;
       }
     } catch (e) {
@@ -170,19 +171,31 @@ class _HomeBodyState extends State<HomeBody> {
   }
 
   Future<void> _checkPredictionStatusAndFetchImage() async {
+
     var predictionId = await _makePredictionAndGetImageUrl();
+    await Future.delayed(Duration(seconds: 5)); // Espera 5 segundos antes de volver a verificar
+    print("El ID prediction: ${predictionId}");
     if (predictionId != null) {
       var predictionStatusUrl =
           "https://api.replicate.com/v1/predictions/$predictionId";
       print("Verificando el estado de la predicción en $predictionStatusUrl");
       while (true) {
         try {
-          var response = await http.get(Uri.parse(predictionStatusUrl));
+          await Future.delayed(Duration(seconds: 30)); // Espera 5 segundos antes de volver a verificar
+          // var response = await http.get(Uri.parse(predictionStatusUrl));
+
+          var response = await http.get(
+            headers: {'Authorization': 'Token r8_cbAmgoyJPEbI8rQ4EcUorwso9yArZwY41ixtM',  "Content-Type": "application/json" },
+            Uri.parse(predictionStatusUrl),
+          );
+
+          // print(response.body);
           if (response.statusCode == 200) {
             var statusResponse = json.decode(response.body);
             var predictionStatus = statusResponse['status'];
             if (predictionStatus == 'succeeded') {
-              var modifiedImageUrl = statusResponse['urls']['result'];
+              // Link a la imagen awevo
+              var modifiedImageUrl = statusResponse['output'];
               print(
                   "La predicción ha tenido éxito. Enlace de la imagen modificada: $modifiedImageUrl");
               setState(() {
@@ -196,13 +209,12 @@ class _HomeBodyState extends State<HomeBody> {
               break;
             } else {
               print("La predicción está en proceso. Esperando...");
-              await Future.delayed(Duration(
-                  seconds: 5)); // Espera 5 segundos antes de volver a verificar
             }
           } else {
             print(
                 "Error al verificar el estado de la predicción. Código de estado: ${response.statusCode}");
             print(response.body);
+            await Future.delayed(Duration(seconds: 5)); // Espera 5 segundos antes de volver a verificar
             break;
           }
         } catch (e) {
